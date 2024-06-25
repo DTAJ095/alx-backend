@@ -5,12 +5,12 @@ from base_caching import BaseCaching
 
 class LIFOCache(BaseCaching):
     """ Defines LIFO cache class """
-    
+
     def __init__(self):
         """ Initialize LIFO caching """
         super().__init__()
         self.cache_keys = []
-    
+
     def put(self, key, item):
         """ Add item in the cache """
         if key is not None and item is not None:
@@ -20,7 +20,7 @@ class LIFOCache(BaseCaching):
                 print("DISCARD: {}".format(discard))
             self.cache_keys.append(key)
             self.cache_data[key] = item
-    
+
     def get(self, key):
         """ Get item by key """
         return self.cache_data.get(key, None)
