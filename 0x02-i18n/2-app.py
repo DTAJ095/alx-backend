@@ -10,17 +10,20 @@ babel = Babel(app)
 class Config():
     """ Config class """
     LANGUAGES = ["en", "fr"]
-    babel.default_locale = "en"
-    babel.default_timezone = "UTC"
+    BABEL_DEFAULT_LOCALE  = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
     DEBUG = True
+
 
 app.config.from_object(Config)
 app.url_map.strict_slashes = False
+
 
 @babel.localeselector
 def get_locale() -> str:
     """ Get locale from request """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
 
 @app.route('/', strict_slashes=False)
 def index():
