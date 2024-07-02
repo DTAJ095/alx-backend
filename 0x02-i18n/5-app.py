@@ -27,10 +27,10 @@ app.config.from_object(Config)
 app.url_map.strict_slashes = False
 
 
-def get_user() -> Union[Dict, None]:
+def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
     """ get user """
     try:
-        return users.get(int(request.args.get('login_as')))
+        return users.get(id)
     except Exception:
         return None
 
@@ -49,6 +49,7 @@ def get_locale() -> str:
     locale = request.args.get('locale')
     if locale and locale in app.config['LANGUAGES']:
         return locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route('/', strict_slashes=False)
