@@ -22,8 +22,10 @@ class Config():
     babel.default_timezone = "UTC"
     DEBUG = True
 
+
 app.config.from_object(Config)
 app.url_map.strict_slashes = False
+
 
 def get_user() -> Union[Dict, None]:
     """ get user """
@@ -32,6 +34,7 @@ def get_user() -> Union[Dict, None]:
     except Exception:
         return None
 
+
 @app.before_request
 def before_request():
     """ before request """
@@ -39,12 +42,14 @@ def before_request():
     if user:
         request.user = user
 
+
 @babel.localeselector
 def get_locale() -> str:
     """ get locale """
     locale = request.args.get('locale')
     if locale and locale in app.config['LANGUAGES']:
         return locale
+
 
 @app.route('/', strict_slashes=False)
 def index():
