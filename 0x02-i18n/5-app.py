@@ -30,7 +30,7 @@ app.url_map.strict_slashes = False
 def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
     """ get user """
     try:
-        return users.get(id)
+        return users.get(int(id), 0)
     except Exception:
         return None
 
