@@ -21,8 +21,8 @@ app.url_map.strict_slashes = False
 @babel.localeselector
 def get_locale() -> str:
     """ Get locale from request """
-    locale = request.query_params.get('locale', '').strip()
-    if locale in app.config.LANGUAGES:
+    locale = request.query_params.get('locale')
+    if locale and locale in app.config['LANGUAGES']:
         return locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
