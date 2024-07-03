@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Use user locale """
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from typing import Union, Dict
 
@@ -47,10 +47,13 @@ def get_locale() -> str:
     locale = request.args.get('locale')
     if locale and locale in app.config['LANGUAGES']:
         return locale
-    if request.user:
-        locale = request.user.get('locale')
+    if g.user:
+        locale = g.user.get('locale')
         if locale and locale in app.config['LANGUAGES']:
             return locale
+    locale = request.headers.get('locale', None)
+    if locale in app.config['LANGUAGES']:
+        return locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
