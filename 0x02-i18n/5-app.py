@@ -38,7 +38,7 @@ def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
 @app.before_request
 def before_request():
     """ before request """
-    user = get_user()
+    user = get_user(id)
     if user:
         request.user = user
 
