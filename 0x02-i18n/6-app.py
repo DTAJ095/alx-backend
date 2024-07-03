@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" """
+""" Use user locale """
 from flask import Flask, render_template, request
 from flask_babel import Babel
 from typing import Union, Dict
@@ -30,7 +30,7 @@ app.url_map.strict_slashes = False
 def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
     """ get user from users """
     try:
-        return users.get(int(id), 0)
+        return users.get(int(id), {})
     except Exception:
         return None
 
