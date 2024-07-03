@@ -18,8 +18,8 @@ users = {
 class Config():
     """ config class """
     LANGUAGES = ["en", "fr"]
-    babel.default_locale = "en"
-    babel.default_timezone = "UTC"
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
     DEBUG = True
 
 
@@ -53,7 +53,7 @@ def get_locale() -> str:
 
 
 @app.route('/', strict_slashes=False)
-def index():
+def index() -> str:
     """ index """
     return render_template('5-index.html')
 

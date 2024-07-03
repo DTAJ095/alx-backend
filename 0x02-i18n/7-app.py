@@ -9,10 +9,10 @@ app = Flask(__name__)
 babel = Babel(app)
 
 class Config():
-    """ Config class """
+    """ Configuration class """
     LANGUAGES = ["en", "fr"]
-    babel.default_locale = "en"
-    babel.default_timezone = "UTC"
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
     DEBUG = True
 
 app.config.from_object(Config)
@@ -25,19 +25,19 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
-def get_user() -> Union[dict, None]:
+def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
     """ Get user """
     try:
-        return users.get(int(request.args.get('login_as')))
+        return users.get(int(id), 0)
     except Exception:
         return None
+
 
 @app.before_request
 def before_request():
     """ Before request """
-    user = get_user()
-    if user:
-        request.user = user
+    setattr(request, 'user', get_user(request.args.get('login_as')))
+
 
 @babel.localeselector
 def get_locale() -> str:

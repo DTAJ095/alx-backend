@@ -16,10 +16,10 @@ users = {
 
 
 class Config():
-    """ config class """
+    """ flask app configuration class """
     LANGUAGES = ["en", "fr"]
-    babel.default_locale = "en"
-    babel.default_timezone = "UTC"
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
     DEBUG = True
 
 
@@ -28,7 +28,7 @@ app.url_map.strict_slashes = False
 
 
 def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
-    """ get user """
+    """ get user from users """
     try:
         return users.get(int(id), 0)
     except Exception:
@@ -37,7 +37,7 @@ def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
 
 @app.before_request
 def before_request():
-    """ before request """
+    """ before get locale request """
     setattr(request, 'user', get_user(request.args.get('login_as')))
 
 
@@ -55,8 +55,8 @@ def get_locale() -> str:
 
 
 @app.route('/', strict_slashes=False)
-def index():
-    """ index """
+def index() -> str:
+    """ return index page """
     return render_template('5-index.html')
 
 
