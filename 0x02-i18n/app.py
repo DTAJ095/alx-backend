@@ -32,7 +32,7 @@ users = {
 def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
     """ Get user """
     try:
-        return users.get(int(id), 0)
+        return users.get(int(id), {})
     except Exception:
         return None
 
