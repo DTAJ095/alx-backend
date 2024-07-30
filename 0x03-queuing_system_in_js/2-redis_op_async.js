@@ -2,18 +2,8 @@
 
 import { createClient, print } from 'redis';
 import { promisify } from 'util';
-
 const redisClient = createClient();
 
-redisClient.on('connect', () => {
-  console.log('Redis client connected to the server');
-  main();
-});
-
-redisClient.on('error', (error) => {
-  console.error(`Redis client not connected to the server: ${error.message}`);
-  redisClient.quit();
-});
 
 /**
  * Set in Redis the value of the key schoolName
@@ -41,3 +31,13 @@ async function main () {
   setNewSchool('HolbertonSanFrancisco', '100');
   await displaySchoolValue('HolbertonSanFrancisco');
 }
+
+redisClient.on('connect', () => {
+  console.log('Redis client connected to the server');
+  main();
+});
+
+redisClient.on('error', (error) => {
+  console.error(`Redis client not connected to the server: ${error.message}`);
+  redisClient.quit();
+});
