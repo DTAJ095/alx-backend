@@ -8,13 +8,6 @@ const PORT = 1245;
 const HOST = 'localhost';
 const redisClient = createClient();
 
-redisClient.on('connect', () => {
-  console.log('Redis client connected to the server');
-});
-redisClient.on('error', (error) => {
-  console.error(`Redis client not connected to the server: ${error.message}`);
-  redisClient.quit();
-});
 
 const listProducts = [
   { id: 1, name: 'suitcase 250', price: 50, stock: 4 },
@@ -22,6 +15,14 @@ const listProducts = [
   { id: 3, name: 'suitcase 650', price: 350, stock: 2 },
   { id: 4, name: 'suitcase 1050', price: 550, stock: 5 }
 ];
+
+redisClient.on('connect', () => {
+  console.log('Redis client connected to the server');
+});
+redisClient.on('error', (error) => {
+  console.error(`Redis client not connected to the server: ${error.message}`);
+  redisClient.quit();
+});
 
 /**
  * find item by id
@@ -54,8 +55,8 @@ async function getCurrentReservedStockById (itemId) {
 
 app.get('/list_products', (_req, res) => {
   res.send(listProducts.map(item => ({
-    id: item.id,
-    name: item.name,
+    itemId: item.id,
+    itemName: item.name,
     price: item.price,
     initialAvailableQuantity: item.stock
   })));
@@ -69,8 +70,8 @@ app.get('/list_products/:itemId', async (req, res) => {
   } else {
     const reservedStock = await getCurrentReservedStockById(parseInt(itemId));
     return res.send({
-      id: item.id,
-      name: item.name,
+      ItemId: item.id,
+      itemName: item.name,
       price: item.price,
       initialAvailableQuantity: item.stock,
       currentQuantity: reservedStock === null ? item.stock : parseInt(reservedStock)
