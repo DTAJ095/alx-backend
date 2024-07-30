@@ -15,8 +15,8 @@ redisClient.on('error', (error) => {
 
 /**
  * Set in Redis the value of the key schoolName
- * @param {string} schoolName 
- * @param {string} value 
+ * @param {string} schoolName
+ * @param {string} value
  */
 function setNewSchool(schoolName, value) {
   redisClient.set(schoolName, value, print);
@@ -24,7 +24,7 @@ function setNewSchool(schoolName, value) {
 
 /**
  * log to the console the value for the key schoolName
- * @param {string} schoolName 
+ * @param {string} schoolName
  */
 function displaySchoolValue(schoolName) {
   redisClient.get(schoolName, print);

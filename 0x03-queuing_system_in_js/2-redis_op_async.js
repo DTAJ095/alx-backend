@@ -7,6 +7,7 @@ const redisClient = createClient();
 
 redisClient.on('connect', () => {
   console.log('Redis client connected to the server');
+  main();
 });
 
 redisClient.on('error', (error) => {
@@ -16,18 +17,18 @@ redisClient.on('error', (error) => {
 
 /**
  * Set in Redis the value of the key schoolName
- * @param {string} schoolName 
- * @param {string} value 
+ * @param {string} schoolName
+ * @param {string} value
  */
-function setNewSchool(schoolName, value) {
+function setNewSchool (schoolName, value) {
   redisClient.set(schoolName, value, print);
 }
 
 /**
  * log to the console the value for the key schoolName
- * @param {string} schoolName 
+ * @param {string} schoolName
  */
-async function displaySchoolValue(schoolName) {
+async function displaySchoolValue (schoolName) {
   const getAsync = promisify(redisClient.get).bind(redisClient);
   console.log(await getAsync(schoolName));
 }
@@ -35,8 +36,8 @@ async function displaySchoolValue(schoolName) {
 /**
  * Main entry point
  */
-async function main() {
-    await displaySchoolValue('Holberton');
-    setNewSchool('HolbertonSanFrancisco', '100');
-    await displaySchoolValue('HolbertonSanFrancisco');
+async function main () {
+  await displaySchoolValue('Holberton');
+  setNewSchool('HolbertonSanFrancisco', '100');
+  await displaySchoolValue('HolbertonSanFrancisco');
 }
